@@ -377,7 +377,6 @@ def WriteFullOTAPackage(input_zip, output_zip):
   script.Print("************************************************")
   script.Print("Starting Installation...")
   script.Print("Formatting system...")
-  script.FormatPartition("/system")
 
   CopyUtilityFiles(input_zip, output_zip)
 
