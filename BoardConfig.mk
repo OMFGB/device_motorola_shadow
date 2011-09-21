@@ -31,10 +31,8 @@ USE_CAMERA_STUB := false
 
 # use pre-kernel.35 vold usb mounting
 BOARD_USE_USB_MASS_STORAGE_SWITCH := true
-BOARD_USE_FROYO_LIBCAMERA := true
 
 # use charge_counter for battery
-BOARD_USE_BATTERY_CHARGE_COUNTER := true
 
 TARGET_BOARD_PLATFORM := omap3
 
@@ -96,8 +94,10 @@ TARGET_PROVIDES_RELEASETOOLS := true
 TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/motorola/shadow/releasetools/shadow_ota_from_target_files
 TARGET_RELEASETOOL_IMG_FROM_TARGET_SCRIPT := device/motorola/shadow/releasetools/shadow_img_from_target_files
 
-BOARD_HIJACK_ENABLE := true
 #BOARD_HIJACK_LOG_ENABLE := true
+
+#Shadow need common motorola 2nd-init hijack
+TARGET_NEEDS_MOTOROLA_HIJACK := true
 
 TARGET_RECOVERY_PRE_COMMAND := "echo 1 > /data/.recovery_mode; sync;"
 TARGET_RECOVERY_PRE_COMMAND_CLEAR_REASON := true
@@ -105,3 +105,4 @@ endif
 
 BOARD_ALWAYS_INSECURE := true
 BOARD_HAS_LARGE_FILESYSTEM := true
+BOARD_MKE2FS := device/motorola/shadow/mke2fs

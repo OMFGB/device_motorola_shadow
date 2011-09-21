@@ -5,10 +5,11 @@
 rild.libpath=/system/lib/libmoto_ril.so
 rild.libargs=-d /dev/ttyS0
 ro.sf.lcd_density=240
-ro.default_usb_mode=2
-
+ro.default_usb_mode=4
+ro.usb.use_custom_service=1
 #Use 1% battery increments
-ro.product.use_charge_counter=1
+#currently doesn't work with GB kernel
+#ro.product.use_charge_counter=1
 
 # BEGIN Motorola, a18772, 05/19/2010, IKSHADOW-5584
 # Add 411 to DAN List for VZW.
@@ -19,7 +20,7 @@ persist.ril.modem.mode =1
 # This defines the max event window manager can
 # handle in 1 s. We may adjust this # for performance
 # reason later
-windowsmgr.max_events_per_sec=55
+windowsmgr.max_events_per_sec=250
 # This defines the min duration between two pointer event
 ro.min_pointer_dur=10
 
@@ -43,7 +44,7 @@ wifi.interface = tiwlan0
 # Time between scans in seconds. Keep it high to minimize battery drain.
 # This only affects the case in which there are remembered access points,
 # but none are in range.
-wifi.supplicant_scan_interval = 90
+wifi.supplicant_scan_interval=150
 
 # Indicate carrier OTA SP number schema
 # refer to frameworks/base/telephony/java/com/android/
@@ -55,7 +56,7 @@ ro.cdma.otaspnumschema=SELC,1,80,99
 ro.opengles.version = 131072
 
 # This is a high density device with more memory, so larger vm heaps for it.
-dalvik.vm.heapsize=30m
+dalvik.vm.heapsize=56m
 # The URL for safety information
 ro.url.safetylegal=http://www.motorola.com/staticfiles/Support/legal
 
@@ -120,20 +121,18 @@ mot.proximity.delay=450
 # disable touch below 60 pixels
 mot.proximity.distance=60
 
-
 # BEGIN Motorola, pkd348, 26-Apr-2010,	ISHADOW-4035
 # true	Horizontal BUA is preloaded, not allow to install standalone version of BuA from Android Market
 # false Horizontal BUA is not preloaded
-ro.HorizontalBUA=false
-
+ro.HorizontalBUA=true
 #Proximity sensor debounce time
-mot.proximity.delay=350
+mot.proximity.delay=450
 mot.proximity.distance=60
 
 # BEGIN Motorola, pkd348, 26-Apr-2010,	ISHADOW-4035
 # true	Horizontal VVM is preloaded, not allow to install standalone version of VVM from Android Market
 # false Horizontal VVM is not preloaded
-ro.HorizontalVVM=false
+ro.HorizontalVVM=true
 
 # BEGIN Motorola, a22976, 21-May-2010, IKSHADOW-5385
 # For Shadow only, NOT applied to Droid2 as requirement different
@@ -141,7 +140,6 @@ ro.mot.buttonlight.timeout=1
 # END Motorola IKSHADOW-5385
 
 ro.mot.master_clear.shredsd=false
-
 
 # BEGIN Motorola, pkd348, 09-July-2010, IKSTABLEONE-1236
 # true  enable the feature of In case of Emergency, default is false

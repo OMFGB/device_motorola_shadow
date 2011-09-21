@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# Copyright (C) 2008 The Android Open Source Project
+# Copyright (C) 2011 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -346,7 +346,9 @@ def WriteFullOTAPackage(input_zip, output_zip):
 #    ts = GetBuildProp("ro.build.date.utc", input_zip)
 #    script.AssertOlderBuild(ts)
 
-  script.AssertKernelVersion()
+# Remove kernel check... for now
+#  script.AssertKernelVersion()
+
 #  AppendAssertions(script, input_zip)
 #  device_specific.FullOTA_Assertions()
   if OPTIONS.backuptool:
@@ -357,14 +359,47 @@ def WriteFullOTAPackage(input_zip, output_zip):
   if OPTIONS.wipe_user_data:
     script.FormatPartition("/data")
 
+  script.Print("************************************************")
+  script.Print("*                                              *")
+  script.Print("*           t3hh4xx0r.com presents             *")
+  script.Print("*                                              *")
+  script.Print("*                        d8b      8            *")
+  script.Print("*       .d8b. 8d8b.d8b.  8'  .d88 88b.         *")
+  script.Print("*       8' .8 8P Y8P Y8 w8ww 8  8 8  8         *")
+  script.Print("*       `Y8P' 8   8   8  8   `Y88 88P'         *")
+  script.Print("*                            wwdP              *")
+  script.Print("*                                              *")
+  script.Print("*  Follow us  @r2DoesInc    @linuxmotion       *")
+  script.Print("*             @xoomdev      @romanbb           *")
+  script.Print("*     And visit t3hh4xx0r.com for updates,     *")
+  script.Print("*            questions, or issues.             *")
+  script.Print("*                                              *")
+  script.Print("************************************************")
+  script.Print("Starting Installation...")
+  script.Print("Formatting system...")
+  script.FormatPartition("/system")
+
   CopyUtilityFiles(input_zip, output_zip)
 
   script.RunFormatAndTuneSystem()
   script.Mount("/system")
+  script.ShowProgress(0.5, 40)
+  script.Print("Extracting system files...")
   script.UnpackPackageDir("system", "/system")
 
+  script.Print("Setting symlinks and permissions...")
   symlinks = CopySystemFiles(input_zip, output_zip)
   script.MakeSymlinks(symlinks)
+
+  script.AppendExtra('symlink("roottools", "/system/xbin/ads", "/system/xbin/allinone",')
+  script.AppendExtra('        "/system/xbin/apploc", "/system/xbin/backup", "/system/xbin/bootani",')
+  script.AppendExtra('        "/system/xbin/cache", "/system/xbin/camsound", "/system/xbin/exe",')
+  script.AppendExtra('        "/system/xbin/fixperms", "/system/xbin/freemem", "/system/xbin/install_zip",')
+  script.AppendExtra('        "/system/xbin/load", "/system/xbin/market_history",  "/system/xbin/pulldown_text",')
+  script.AppendExtra('        "/system/xbin/rb", "/system/xbin/restore", "/system/xbin/rmapk",')
+  script.AppendExtra('        "/system/xbin/setcpu", "/system/xbin/setprops", "/system/xbin/slim",')
+  script.AppendExtra('        "/system/xbin/sound", "/system/xbin/switch", "/system/xbin/symlink",')
+  script.AppendExtra('        "/system/xbin/usb", "/system/xbin/zipalign_apks");')
 
   Item.GetMetadata(input_zip)
   Item.Get("system").SetPermissions(script)
@@ -385,6 +420,7 @@ def WriteFullOTAPackage(input_zip, output_zip):
   script.ShowProgress(0.2, 10)
 
   script.ShowProgress(0.1, 0)
+  script.Print("Finished installing OMFGB, Enjoy!")
   device_specific.FullOTA_InstallEnd()
 
   if OPTIONS.extra_script is not None:
