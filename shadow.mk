@@ -17,6 +17,10 @@
 # This is the product configuration for a generic CDMA shadow,
 # not specialized for any geography.
 #
+
+# The gps config appropriate for this device
+$(call inherit-product, device/common/gps/gps_us_supl.mk)
+
 ## (1) First, the most specific values, i.e. the aspects that are specific to CDMA
 
 PRODUCT_COPY_FILES += \
